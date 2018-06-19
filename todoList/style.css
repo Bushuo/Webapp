@@ -1,0 +1,43 @@
+body {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    font-family: open sans, sans-serif;
+}
+
+.top {
+    text-align: center;
+    background: #999;
+}
+
+.title {
+    font-size: 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.tasks {
+    font-family: inconsolata, sans-serif;
+    font-size: 18px;
+    text-align: right;
+    margin-right: 5%;
+    padding-bottom: 1%;
+}
+
+.bottom {
+    background: #BBB;
+    font-family: inconsolata, sans-serif;
+    font-size: 18px;
+}
+
+.add__container {
+    display: block;
+    margin-left: 20%;
+    margin-right:20%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.add__description {
+    width: 90%;
+}
