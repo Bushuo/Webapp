@@ -7,6 +7,7 @@ body {
 
 .top {
     text-align: center;
+    padding-right: 50px;
     background: #999;
 }
 
@@ -26,18 +27,44 @@ body {
 
 .bottom {
     background: #BBB;
-    font-family: inconsolata, sans-serif;
     font-size: 18px;
 }
 
 .add__container {
     display: block;
-    margin-left: 20%;
-    margin-right:20%;
+    margin-left: 10%;
+    //margin-right:20%;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
+button {
+    line-height: 1.1;
+    font-size: 35px;
+    border: none;
+    background: none;
+    vertical-align: middle;
+    cursor: pointer;
+
+}
+
+button:focus {outline: none;}
+
+.add__btn {
+    color: green; 
+    //linear-gradient(to bottom right, green, grey);
+}
+
+.add__btn:active { transform: translate(2px);}
+
 .add__description {
     width: 90%;
+    height: 44px;
+    font-size: 18px;
+    font-family: inconsolata, sans-serif;
+    padding-left: 1%;
+}
+
+.container {
+    background: #DDD;
 }
