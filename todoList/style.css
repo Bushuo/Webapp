@@ -30,10 +30,9 @@ body {
     font-size: 18px;
 }
 
-.add__container {
+.add__container, .container {
     display: block;
     margin-left: 10%;
-    //margin-right:20%;
     padding-top: 10px;
     padding-bottom: 10px;
 }
