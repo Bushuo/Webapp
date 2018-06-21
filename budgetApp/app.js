@@ -198,7 +198,8 @@ var  appController = (function(budgetCtrl, uiCtrl) {
         uiCtrl.displayBudget(budget);
     }
     
-    var ctrlAddItem = function() { var input, newItem;
+    var ctrlAddItem = function() { 
+        var input, newItem;
 
         // 1. Get input data
         input = uiCtrl.getInput();

@@ -10,6 +10,7 @@ button {
 }
 
 button:focus {outline: none;}
+button:active { transform: translate(2px, 1px);}
 
 body {
     margin-left: auto;
@@ -23,7 +24,7 @@ body {
 .top {
     text-align: center;
     padding-right: 50px;
-    background: #999;
+    background: #9B7900;
 }
 
 .title {
@@ -43,7 +44,7 @@ body {
 /* BOTTOM */
 
 .bottom {
-    background: #BBB;
+    background: #B99925;
     font-size: 18px;
 }
 
@@ -56,10 +57,14 @@ body {
 }
 
 .add__btn {
-    color: green; 
+    color: #359A1F; 
 }
 
-.add__btn:active { transform: translate(2px);}
+.item__delete--btn {
+    color: #A62248;
+}
+
+
 
 .add__description {
     width: 90%;
@@ -69,9 +74,11 @@ body {
     padding-left: 1%;
 }
 
-.item:first-child {border-top: 1px solid #e7e7e7; }
-.item:nth-child(even) { background-color: #f7f7f7; }
+.item:first-child {border-top: 1px solid #9B7900; }
+.item:nth-child(even) { background-color: #F6DA77; }
 .item {
+    border-left: 1px solid #9B7900;
+    border-right: 1px solid #9B7900;
 }
 
 .item__description {
@@ -83,13 +90,13 @@ body {
 }
 
 .item__delete {
-    display: inline-block;
     float: right;
     padding-right: 1%;
     padding-top: 5.5px;
 }
 
 .container {
-    background: #DDD;
-    padding-top: 0;
+    background: #B99925;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
