@@ -1,0 +1,10 @@
+todoList:
+  UI:
+  ☐ task 3 categories (boulder, pebble, sand)
+    if boulder is marked it jumps to the top
+    boulders should stand out visually
+  ☐ add a completed button
+  
+  Logic:
+  ☐ move completed todos to the a seperate completed section
+  ☐ make completed todos reviveable (copy it to the open section again)
