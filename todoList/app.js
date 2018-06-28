@@ -23,6 +23,12 @@ var taskController = (function() {
             data.allTasks.push(newTask);
             data.openTasks.push(newTask);
             return newTask;
+        },
+        testData: function() {
+            return data.allTasks;
+        },
+        getOpenTaskCount: function() {
+            return data.openTasks.length;
         }
     }
 })();
@@ -31,17 +37,30 @@ var uiController = (function () {
     var DOMstrings = {
         inputBtn: '.add__btn',
         inputDescription: '.add__description',
-        taskContainer: '.container'
+        taskContainer: '.tasks__container',
+        taskCount: '.tasks__number',
+        taskText: '.tasks__literal'
     };
     return{
-        addListTask: function(obj) {
+        updateTaskCount: function(count) {
+            let text = " tasks";
+            document.querySelector(DOMstrings.taskCount).innerHTML = ""+count;
+            if(count == 1) {
+                text = " task";
+            }
+            document.querySelector(DOMstrings.taskText).innerHTML = text;
+        }
+        ,addListTask: function(obj) {
             var html, newHtml, pivotElement;
             pivotElement = DOMstrings.taskContainer;
             // html string with placeholder text marked by %%
-            html = '<div class="item"><div class="item__description">%description%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>';
+            html = '<div class="item"><div class="item__description">%description%</div><div class="item__controls"><button class="item__complete--btn"><i class="ion-ios-checkmark-outline"></i></button><button class="item__boulder--btn"><i class="ion-ios-star-outline"></i></button><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>';
             newHtml = html.replace("%description%", obj.description);
             // insert html string to DOM
             document.querySelector(pivotElement).insertAdjacentHTML('beforeend', newHtml);
+        },
+        resetInput: function() {
+            document.querySelector(DOMstrings.inputDescription).value = "";
         },
         getInput: function() {
             return{
@@ -51,9 +70,7 @@ var uiController = (function () {
         getDOMstrings: function() {
             return DOMstrings;
         }
-
     }
-    
 })();
 
 var appController = (function(taskCtrl, uiCtrl) {
@@ -69,6 +86,11 @@ var appController = (function(taskCtrl, uiCtrl) {
         });
     };
 
+    var setTaskCount = function() {
+        let count = taskCtrl.getOpenTaskCount();
+        uiCtrl.updateTaskCount(count);
+    };
+
     var addTaskItem = function() {
         var input, newItem;
         // get input data
@@ -79,16 +101,17 @@ var appController = (function(taskCtrl, uiCtrl) {
             // add task to UI
             uiCtrl.addListTask(newItem);
             // reset input
-
+            uiCtrl.resetInput();
             // update task count
+            setTaskCount();
         }
-
     }
 
     return {
         init: function() {
             console.log("app started");
             setupEventListeners();
+            setTaskCount();
         }
     };
 })(taskController, uiController);

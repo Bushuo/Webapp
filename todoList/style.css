@@ -39,6 +39,11 @@ body {
     text-align: right;
     margin-right: 5%;
     padding-bottom: 1%;
+    margin: 0;
+}
+
+.tasks__literal {
+    font-style: normal;
 }
 
 /* BOTTOM */
@@ -48,12 +53,14 @@ body {
     font-size: 18px;
 }
 
-.add__container, .container {
+.add__container, .tasks__container {
     display: block;
     padding-top: 10px;
     padding-bottom: 10px;
     margin: 0 auto;
-    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: auto;
 }
 
 .add__btn {
@@ -63,8 +70,6 @@ body {
 .item__delete--btn {
     color: #A62248;
 }
-
-
 
 .add__description {
     width: 90%;
@@ -86,17 +91,27 @@ body {
     display: inline-block;
     height: 44px;
     font-size: 18px;
-    padding-top: 11px;
+    padding-top: 17px;
+    width: 70%;
+    text-align: left;
 }
 
-.item__delete {
+.item__controls {
     float: right;
     padding-right: 1%;
     padding-top: 5.5px;
 }
 
-.container {
+.tasks__container {
     background: #B99925;
     padding-top: 0px;
     padding-bottom: 0px;
+    margin-right: 16.7%;
+}
+
+.item__boulder--btn{
+    color: grey;
+}
+.item__complete--btn{
+    color: green;
 }

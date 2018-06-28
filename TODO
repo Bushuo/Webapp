@@ -2,9 +2,15 @@ todoList:
   UI:
   ☐ task 3 categories (boulder, pebble, sand)
     if boulder is marked it jumps to the top
+    to its container
     boulders should stand out visually
   ☐ add a completed button
+  ☐ different containers should be hideable/foldable
   
   Logic:
   ☐ move completed todos to the a seperate completed section
   ☐ make completed todos reviveable (copy it to the open section again)
+  ☐ make a boulder container
+  ☐ make a pebble container
+  ☐ make a sand container
+  ☐ open tasks is fusion of the three containers
