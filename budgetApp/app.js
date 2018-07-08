@@ -71,6 +71,18 @@ var budgetController = (function() {
             }
         },
 
+        deleteItem: function(type, id) {
+            let ids, index;
+            ids = data.allItems[type].map(function(current) {
+                return current.id;
+            });
+            index = ids.indexOf(id);
+            if (index === -1) {
+                return;
+            }
+            data.allItems[type].splice(index, 1); // removes 1 at index position
+        },
+
         getBudget: function() {
             return {
                 budget: data.budget,
@@ -233,9 +245,10 @@ var  appController = (function(budgetCtrl, uiCtrl) {
             // inc-1
             splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
 
             // delete item from datastructe
+            budgetCtrl.deleteItem(type, ID);
 
             // delete item from UI
 
