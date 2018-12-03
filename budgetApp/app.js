@@ -1,4 +1,8 @@
+// BUDGET CONTROLLER
+
+// immediatly invoked function expression = iife
 var budgetController = (function() {
+
     var Expense = function(id, description, value) {
         this.id = id;
         this.description = description;
@@ -32,6 +36,7 @@ var budgetController = (function() {
         percentage: -1
     };
 
+    // PUBLIC
     return {
         addItem: function(type, des, val) {
             var newItem, ID;
@@ -72,11 +77,13 @@ var budgetController = (function() {
         },
 
         deleteItem: function(type, id) {
-            let ids, index;
+			var ids, index;
+			// map takes callback and creates new array with the returned values
             ids = data.allItems[type].map(function(current) {
                 return current.id;
             });
-            index = ids.indexOf(id);
+			index = ids.indexOf(id);
+			
             if (index === -1) {
                 return;
             }
@@ -96,10 +103,14 @@ var budgetController = (function() {
             console.log(data);
         }
     }
-}());
+}()); // invokes the fuction
 
+
+// UI CONTROLLER
 
 var uiController = (function() {
+
+    // place to store the DOM class names
     var DOMstrings = {
         inputType: '.add__type',
         inputDescription: '.add__description',
@@ -114,6 +125,7 @@ var uiController = (function() {
         container: '.container'
     };
 
+    // PUBLIC
     return {
         getInput: function() {
             return {
@@ -144,7 +156,12 @@ var uiController = (function() {
             newHtml = newHtml.replace("%description%", obj.description);
             // insert html into DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
-        },
+		},
+
+		deleteListItem: function(selectorID) {
+			var el = document.getElementById(selectorID);
+			el.parentNode.removeChild(el);
+		},
 
         clearFieldsAndResetFocus: function() {
             var fields, fieldsArray;
@@ -182,6 +199,7 @@ var uiController = (function() {
     };
 }());
 
+// APP CONTROLLER
 
 var  appController = (function(budgetCtrl, uiCtrl) {
 
@@ -237,25 +255,30 @@ var  appController = (function(budgetCtrl, uiCtrl) {
     };
 
     var ctrlDeleteItem = function (event) {
-        let itemID, splitID, type, ID;
+        var itemID, splitID, type, ID;
 
         itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
 
         if (itemID) {
-            // inc-1
-            splitID = itemID.split('-');
+			// inc-1
+			// create array from string that is split on the character provided
+            splitID = itemID.split('-'); 
             type = splitID[0];
             ID = parseInt(splitID[1]);
 
             // delete item from datastructe
             budgetCtrl.deleteItem(type, ID);
 
-            // delete item from UI
+			// delete item from UI
+			uiCtrl.deleteListItem(itemID);
 
-            // update and show new budget
+			// update and show new budget
+			updateBudget();
         }
     };
 
+
+    // PUBLIC
     return {
         init: function() {
             console.log('App has started');
