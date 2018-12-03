@@ -162,8 +162,37 @@ var uiController = (function() {
         expensesLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
 		container: '.container',
-		expensesPercLabel: '.item__percentage'
-    };
+		expensesPercLabel: '.item__percentage',
+		dateLabel: '.budget__title--month',
+	};
+	
+	var formatNumber = function(number, type) {
+		var numSplit, int, dec;
+		/* 
+			+ or - before the number
+			exaclty 2 decimal values
+			space seperating the thousands
+
+			2310.45123 -> + 2 310.45
+		*/
+
+		number = Math.abs(number);
+		number = number.toFixed(2); // adds 2 fixed decimal values
+		numSplit = number.split('.');
+		int = numSplit[0];
+		dec = numSplit[1];
+		if(int.length > 3) {
+			int = int.substr(0, int.length-3) + ' ' + int.substr(int.length-3, 3);
+		}
+
+		return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+	}
+
+	var nodeListForEach = function(list, callback) {
+		for(var i = 0; i < list.length; i++) {
+			callback(list[i], i);
+		}
+	};
 
     // PUBLIC
     return {
@@ -182,7 +211,7 @@ var uiController = (function() {
             // create string with placeholder text
             if (type === "inc")
             {
-                element = DOMstrings.incomeContainer;
+				element = DOMstrings.incomeContainer;
                 html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
             else if (type === "exp")
@@ -192,7 +221,7 @@ var uiController = (function() {
             }
             // replace the placeholder text with actual data
             newHtml = html.replace("%id%", obj.id);
-            newHtml = newHtml.replace("%value%", obj.value);
+            newHtml = newHtml.replace("%value%", formatNumber(obj.value, type));
             newHtml = newHtml.replace("%description%", obj.description);
             // insert html into DOM
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
@@ -222,9 +251,12 @@ var uiController = (function() {
         },
 
         displayBudget: function(obj) {
-            document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
-            document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
-            document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+			var type;
+			obj.budget >= 0 ? type = 'inc' : type = 'exp';
+
+            document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
+            document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+            document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.totalExp, 'exp');
 
             if (obj.percentage > 0) {
                 document.querySelector(DOMstrings.percentageLabel).textContent = obj.percentage + "%";
@@ -236,11 +268,7 @@ var uiController = (function() {
 		displayPercentages: function(percentages) {
 			var fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
 
-			var nodeListForEach = function(list, callback) {
-				for(var i = 0; i < list.length; i++) {
-					callback(list[i], i);
-				}
-			};
+			
 
 			nodeListForEach(fields, function(cur, index){
 				if(percentages[index] > 0) {
@@ -250,6 +278,34 @@ var uiController = (function() {
 				}
 
 			});
+		},
+
+		displayDate: function() {
+			var now, year, month, months;
+			
+			now = new Date();
+
+			month = now.getMonth();
+			months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+			year = now.getFullYear();
+			document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
+
+		},
+
+		changedType: function() {
+			var fields = document.querySelectorAll(
+				DOMstrings.inputType + ',' +
+				DOMstrings.inputDescription + ',' +
+				DOMstrings.inputValue
+			);
+
+			nodeListForEach(fields, function(cur) {
+				cur.classList.toggle('red-focus');
+			});
+
+			document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
+
 		},
 
         getDOMstrings: function() {
@@ -276,7 +332,9 @@ var  appController = (function(budgetCtrl, uiCtrl) {
 
         document.querySelector(DOM.container).addEventListener("click", function(event) {
             ctrlDeleteItem(event);
-        });
+		});
+		
+		document.querySelector(DOM.inputType).addEventListener("change", uiCtrl.changedType);
 	};
 	
 	var updatePercentages = function() {
@@ -360,7 +418,8 @@ var  appController = (function(budgetCtrl, uiCtrl) {
     return {
         init: function() {
             console.log('App has started');
-            setupEventListeners();
+			setupEventListeners();
+			uiCtrl.displayDate();
             uiCtrl.displayBudget({
                 budget:0,
                 percentage:-1,
